@@ -242,6 +242,8 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
 .convin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.convin .fin{width:100%;box-sizing:border-box}.convout{margin:14px 0 6px;display:grid;gap:6px}.convrow{display:flex;justify-content:space-between;align-items:baseline;padding:10px 12px;border:1px solid var(--line);border-radius:10px}.convrow b{font-size:20px;font-variant-numeric:tabular-nums}.convl{color:var(--muted)}.convsrc{opacity:.6}
 .head .hconv{margin-left:8px}.head .hconv+.hsaved{margin-left:-4px}
 @media(max-width:860px){.hconv span{display:none}.head .hconv{min-width:48px;justify-content:center;padding:0 12px;margin-left:auto;margin-right:0}.head .hconv+.hsaved{margin-left:-4px}}
+/* Units and Saved setups: round icon buttons on every screen size, as on the phone. */
+.head .hsaved{min-width:48px;justify-content:center;padding:0 12px}.head .hsaved #savedLab,.head .hconv span{display:none}.head .hconv+.hsaved{margin-left:-4px}
 @media print{.hbtns{display:none}}
 </style>
 </head>
@@ -4026,12 +4028,12 @@ function cssv(name,fb){var v="";try{v=getComputedStyle(document.documentElement)
 function xesc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function wrapTxt(t,n){var out=[],ln="";String(t).split(/\s+/).forEach(function(w){if(ln&&(ln+" "+w).length>n){out.push(ln);ln=w}else ln=ln?ln+" "+w:w});if(ln)out.push(ln);return out}
 // Fixed light colours for the document, whatever mode the page is in.
-// Colours of the saved PDF: the app's dark theme.
-var RC={surface:"#131c25",ink:"#e6edf3",muted:"#93a3b2",line:"#2c3a47",ok:"#4fd1bc",bad:"#ff8a73",warn:"#f0b955",hi:"#f5a400",accent:"#7fb0e8"};
+// Colours of the saved PDF: white pages.
+var RC={surface:"#ffffff",ink:"#14202b",muted:"#5d6b78",line:"#d6dde3",ok:"#0b7a6b",bad:"#a8321f",warn:"#9a5b00",hi:"#f5a400",accent:"#1d4e89"};
 // The NeuroStack logo (same drawing as the header) at the top of each PDF; returns the height used.
 function pdfLogo(o,x,y){var d="M 62 190 L 62 96 C 62 50 108 44 122 92 L 134 148 C 148 196 194 190 194 144 L 194 50",h=40,sc=h/172;
-  o.push('<g transform="translate('+x+','+y+') scale('+sc.toFixed(4)+') translate(-45,-20)" fill="none"><path d="'+d+'" stroke="#2B3F8C" stroke-width="30" stroke-dasharray="21 100" pathLength="100"/><path d="'+d+'" stroke="#3D7BFF" stroke-width="20" stroke-dasharray="50 100" pathLength="100"/><path d="'+d+'" stroke="#5FD4E8" stroke-width="11" stroke-dasharray="84 100" pathLength="100"/><path d="'+d+'" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" pathLength="100"/><circle cx="194" cy="32" r="8" fill="#FF7A45"/></g>');
-  o.push('<text x="'+(x+38)+'" y="'+(y+h-5)+'" font-size="36" fill="#FFFFFF" letter-spacing="-0.8">euro<tspan font-weight="700" fill="#5FD4E8">Stack</tspan></text>');return h}
+  o.push('<g transform="translate('+x+','+y+') scale('+sc.toFixed(4)+') translate(-45,-20)" fill="none"><path d="'+d+'" stroke="#101C52" stroke-width="30" stroke-dasharray="21 100" pathLength="100"/><path d="'+d+'" stroke="#2F5FE0" stroke-width="20" stroke-dasharray="50 100" pathLength="100"/><path d="'+d+'" stroke="#1BA3C2" stroke-width="11" stroke-dasharray="84 100" pathLength="100"/><path d="'+d+'" stroke="#0A1020" stroke-width="4" stroke-linecap="round" pathLength="100"/><circle cx="194" cy="32" r="8" fill="#E8551F"/></g>');
+  o.push('<text x="'+(x+38)+'" y="'+(y+h-5)+'" font-size="36" fill="#0A1020" letter-spacing="-0.8">euro<tspan font-weight="700" fill="#2F5FE0">Stack</tspan></text>');return h}
 function rres(str){return str.replace(/var\(--([a-z]+)\)/g,function(m,k){return RC[k]||RC.ink})}
 function rtx(o,x,yy,t,sz,col,wt,anc){o.push('<text x="'+x+'" y="'+yy+'" font-size="'+sz+'" fill="'+col+'"'+(wt?' font-weight="'+wt+'"':"")+(anc?' text-anchor="'+anc+'"':"")+'>'+xesc(t)+'</text>')}
 function rcol(m){return m.classList.contains("bad")?RC.bad:(m.classList.contains("warn")?RC.warn:RC.ok)}
