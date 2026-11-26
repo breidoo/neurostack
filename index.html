@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- NeuroStack. © 2026 NeuroStack. All rights reserved. This code, its design and its calculations may not be copied, modified or redistributed without permission. -->
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
@@ -111,7 +112,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .btnlink{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:8px;color:var(--accent);text-decoration:none;font-weight:500}
 .srow{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}.stop{margin-bottom:6px}.sbtns{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.sload,.shx{min-height:40px;padding:6px 12px;font-size:14px}.sname{display:block;width:100%;cursor:pointer}.snm{text-decoration:underline dotted;text-underline-offset:3px}.sname.sbad{color:var(--bad);border-color:var(--bad);background:transparent}.sname.swarn{color:var(--warn);border-color:var(--warn);background:transparent}.sspec{margin-top:6px}.stip{z-index:60;max-width:300px;font-size:12.5px;line-height:1.4}.stip div+div{margin-top:2px}.sname{flex:1 1 auto;text-align:left;background:var(--bg);color:var(--ink);border:1px solid var(--line);font-weight:500}.sname small{display:block;color:var(--muted);font-weight:400;font-size:12px}
 .ic{width:18px;height:18px;flex:none}#saveBtn,#shareBtn{display:inline-flex;align-items:center;gap:8px}.savebtn{background:var(--ok);color:var(--surface);font-weight:600}
-.swrap{position:relative}#results{position:absolute;left:0;right:0;top:100%;z-index:30;margin-top:4px;max-height:min(60vh,420px);overflow:auto;background:var(--surface);box-shadow:0 10px 28px rgba(0,0,0,.22)}
+.swrap{position:relative}
+#q{min-height:52px;padding:10px 14px 10px 44px;font-size:16px;border:2px solid var(--accent);border-radius:12px;background-color:var(--surface);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%237cb3ff' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5 21 21'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:14px center;background-size:20px 20px;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent),0 6px 18px rgba(0,0,0,.35);text-overflow:ellipsis}
+#q::placeholder{color:var(--ink);opacity:.72}
+#q:focus{outline:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 40%,transparent),0 6px 18px rgba(0,0,0,.35)}
+@media(max-width:420px){#q{padding-left:36px;padding-right:6px;background-position:11px center;background-size:18px 18px}#q::placeholder{font-size:12px;letter-spacing:-.15px}}#results{position:absolute;left:0;right:0;top:100%;z-index:30;margin-top:4px;max-height:min(60vh,420px);overflow:auto;background:var(--surface);box-shadow:0 10px 28px rgba(0,0,0,.22)}
 .res.grp{font-weight:600}.res.back{color:var(--accent);position:sticky;top:0;background:var(--surface);z-index:1}
 button.btnlink{background:transparent}a.btnlink.savebtn{gap:8px;border-color:var(--ok);background:var(--ok);color:var(--surface);font-weight:600}
 #vSave{margin-left:auto}#actRow .vsave{min-height:0;padding:10px 14px;font-size:inherit}.shx{display:inline-flex;align-items:center;gap:8px}
@@ -221,7 +226,7 @@ body:not(.wbmode) .head{margin-bottom:48px}
 .wbdisc summary:before,.demo.disc summary:before{content:"\25B8\00a0"}.wbdisc[open] summary:before,.demo.disc[open] summary:before{content:"\25BE\00a0"}
 .wbdisc p,.demo.disc p{margin:0 auto;max-width:640px;box-sizing:border-box;padding:10px 12px 0;background:var(--warnbg);color:var(--warn);text-align:left}
 .wbdisc p:first-of-type,.demo.disc p:first-of-type{border-radius:8px 8px 0 0}.wbdisc p:last-child,.demo.disc p:last-child{border-radius:0 0 8px 8px;padding-bottom:10px;margin-bottom:0}.wbdisc p:only-of-type,.demo.disc p:only-of-type{border-radius:8px}
-.pgfoot{margin-top:28px}
+.pgfoot{margin-top:28px}.cpy{display:block;font-size:12px;line-height:1.4}
 /* Sources: the same centred drop-down, directly above the disclaimer; list items with dashes. */
 .wbsrc{text-align:center;margin-top:22px}.wbsrc summary{display:inline-block;list-style:none}.wbsrc summary::-webkit-details-marker{display:none}.wbsrc summary:before{content:"\25B8\00a0"}.wbsrc[open] summary:before{content:"\25BE\00a0"}
 .wbsrc>*:not(summary){text-align:left;max-width:640px;margin-left:auto;margin-right:auto}.wbsrc ul{list-style:none;padding-left:0}.wbsrc ul{counter-reset:src}.wbsrc li{counter-increment:src;padding-left:22px;text-indent:-22px}.wbsrc li:before{content:counter(src) ".";display:inline-block;width:22px;text-indent:0}
@@ -264,7 +269,7 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
 <p class="sub" id="tgt"></p>
 <div class="swrap">
 <div class="row">
-  <input id="q" type="search" placeholder="Search devices or type (guide, micro, wire…)" aria-label="Search devices" autocomplete="off">
+  <input id="q" type="search" placeholder="Search devices (guide, micro, balloon, etc...)" aria-label="Search devices" autocomplete="off">
 </div>
 <div id="results" class="results" hidden></div>
 </div>
@@ -353,7 +358,7 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
     <li>Measuring method: manufacturer's sizing video (“measure and match”).</li>
   </ul></details>
 <details class="wbdisc"><summary>Disclaimer</summary><p>Estimate only. This does not replace the manufacturer's current device selection table, the IFU or clinical judgement. The table here was transcribed from published copies of the manufacturer's chart and has not been verified by the manufacturer; sizes and availability differ by region. The drawing is schematic. Catheter data are draft records from the NeuroStack dataset.</p></details>
-  <footer class="pgfoot">Prototype v0.4 · dataset <span class="dsvc">none loaded</span></footer>
+  <footer class="pgfoot"><span class="cpy">© 2026 NeuroStack. All rights reserved. The code, design and calculations may not be copied, modified or redistributed without permission.</span></footer>
 </section>
 <section id="coilPage" class="wbpage" aria-label="Coil sizing" hidden>
   <div class="wbhead"><h1 class="wbtitle">Coil sizing</h1></div>
@@ -387,7 +392,7 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
     <li>Wire diameter and packing: PMC7977130. Packing density is not the only factor in recanalization: PMC4859523.</li>
   </ul></details>
 <details class="wbdisc"><summary>Disclaimer</summary><p>Estimate only. This does not replace the coil manufacturer's IFU or clinical judgement. The coils here are generic: real coils come in fixed loop diameters and lengths, and their wire diameter differs by product line and softness. The suggested sequence is a rule of thumb, not a manufacturer recommendation. The aneurysm volume is that of an ellipsoid, which can differ considerably from the true volume of an irregular aneurysm.</p></details>
-  <footer class="pgfoot">Prototype v0.4 · dataset <span class="dsvc">none loaded</span></footer>
+  <footer class="pgfoot"><span class="cpy">© 2026 NeuroStack. All rights reserved. The code, design and calculations may not be copied, modified or redistributed without permission.</span></footer>
 </section>
 <section id="predPage" class="wbpage" aria-label="Prediction tools" hidden>
   <div class="wbhead"><h1 class="wbtitle">Prediction tools</h1></div>
@@ -405,7 +410,7 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
 <p class="dnote">Simplified drawings made for this tool, not patient images; not to scale.</p></div><details class="wbsrc"><summary>Sources</summary><ul><li>Bern score: Dobrocky et al., JAMA Neurol 2019;76:580–587. Major criteria, 2 points each: pachymeningeal enhancement, engorgement of the venous sinus, suprasellar cistern of 4.0 mm or less. Minor criteria, 1 point each: subdural fluid collection, prepontine cistern of 5.0 mm or less, mamillopontine distance of 6.5 mm or less. 2 points or fewer: low probability of a spinal CSF leak; 3 to 4: intermediate; 5 or more: high.</li><li>Mamillopontine distance landmarks: Shah et al., AJR 2013;200:400–407. The measuring guide is a drawing made for this tool, not an image from a paper.</li></ul></details></div>
   <div id="pd_mr" class="pdpanel" hidden><h2 class="wbsec">MR PREDICTS (endovascular treatment in acute ischaemic stroke)</h2><div class="pdform"><label class="pdl" for="mrAge">Age (years)<span class="pdreq" aria-hidden="true"> *</span></label><input id="mrAge" aria-required="true" class="fin pdi pdn" type="text" inputmode="decimal" autocomplete="off"><label class="pdl" for="mrNihss">Baseline NIHSS (0 to 42)<span class="pdreq" aria-hidden="true"> *</span></label><input id="mrNihss" aria-required="true" class="fin pdi pdn" type="text" inputmode="decimal" autocomplete="off"><label class="pdl" for="mrMrs">Pre-stroke mRS</label><select id="mrMrs" class="fin pdi"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><label class="pdl" for="mrDm">Diabetes mellitus</label><select id="mrDm" class="fin pdi"><option value="0">No</option><option value="1">Yes</option></select><label class="pdl" for="mrBp">Baseline systolic blood pressure (mmHg)<span class="pdreq" aria-hidden="true"> *</span></label><input id="mrBp" aria-required="true" class="fin pdi pdn" type="text" inputmode="decimal" autocomplete="off"><label class="pdl" for="mrGlu">Baseline glucose<span class="pdreq" aria-hidden="true"> *</span></label><div class="pdpair"><input id="mrGlu" aria-required="true" class="fin pdi pdn" type="text" inputmode="decimal" autocomplete="off"><select id="mrGluU" class="fin pdi" aria-label="Glucose unit"><option value="mg">mg/dL</option><option value="mmol">mmol/L</option></select></div><label class="pdl" for="mrIvt">IV alteplase</label><select id="mrIvt" class="fin pdi"><option value="0">No</option><option value="1">Yes</option></select><label class="pdl" for="mrAsp">ASPECTS</label><select id="mrAsp" class="fin pdi"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10" selected>10</option></select><label class="pdl" for="mrLoc">Location of occlusion</label><select id="mrLoc" class="fin pdi"><option value="ICA">Intracranial ICA(-T)</option><option value="M1">M1</option><option value="M2">M2</option></select><label class="pdl" for="mrColl">CTA collateral score</label><select id="mrColl" class="fin pdi"><option value="0">0: absent collaterals</option><option value="1">1: poor (less than 50% filling)</option><option value="2">2: moderate (more than 50% filling)</option><option value="3">3: good collaterals</option></select><label class="pdl" for="mrOnset">Estimated time from onset to groin puncture (minutes)<span class="pdreq" aria-hidden="true"> *</span></label><input id="mrOnset" aria-required="true" class="fin pdi pdn" type="text" inputmode="decimal" autocomplete="off"><label class="pdl" for="mrInt">Intercept (baseline risk)</label><select id="mrInt" class="fin pdi"><option value="reg">MR CLEAN Registry</option><option value="her">HERMES</option></select></div><p class="dnote pdreqn"><span class="pdreq" aria-hidden="true">*</span> Required field</p><div id="mrOut" hidden><div id="mrRes" class="wbrec pdres"></div><h3 class="wbsec">Predicted modified Rankin Scale at 90 days</h3><div id="mrBars" class="mrbars"></div><div class="mrkey" id="mrKey"></div></div><details class="wbsrc"><summary>Sources</summary><ul><li>Updated MR PREDICTS model: Venema et al., Stroke 2021;52:2764–2772. Regression equation, variable definitions and both sets of intercepts as printed in the Data Supplement (“MR PREDICTS regression equation”). Glucose in mmol/L is converted to mg/dL by multiplying by 18.</li><li>Original model: Venema et al., BMJ 2017;357:j1710. Developed for intracranial ICA, M1 and M2 occlusions.</li></ul></details></div>
 <details class="wbdisc"><summary>Disclaimer</summary><p>For information only. These are published scores and classifications, reproduced from the papers listed under Sources; the figures are group estimates from those studies and do not predict what will happen to an individual patient. This does not replace clinical judgement, the original publications or local guidelines. The transcription has not been independently verified.</p></details>
-  <footer class="pgfoot">Prototype v0.4 · dataset <span class="dsvc">none loaded</span></footer>
+  <footer class="pgfoot"><span class="cpy">© 2026 NeuroStack. All rights reserved. The code, design and calculations may not be copied, modified or redistributed without permission.</span></footer>
 </section>
 <div id="shade" class="shade" hidden></div>
 <aside id="side" class="side" aria-label="Saved setups" hidden>
@@ -448,7 +453,7 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
 <p>All devices are unverified drafts: real products whose dimensions were transcribed from manufacturer documents and have not been checked against the IFU. They may contain errors.</p>
 <p>The authors give no warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, accuracy or completeness. To the fullest extent permitted by law, the authors accept no responsibility or liability for any loss, damage, cost or consequence arising from use of or reliance on this tool, including direct, indirect, incidental, special or consequential losses, business interruption, loss of data, personal injury or death.</p>
 </details>
-<footer>Prototype v0.4 · dataset <span id="dsv">none loaded</span></footer>
+<footer><span class="cpy">© 2026 NeuroStack. All rights reserved. The code, design and calculations may not be copied, modified or redistributed without permission.</span></footer>
 </div>
 </main>
 
@@ -3904,7 +3909,7 @@ function search(){
     box.appendChild(b);
   });
 }
-if(DSVER)$("dsv").textContent=DSVER+" ("+DB.filter(function(d){return d.st}).length+" devices)";[].forEach.call(document.querySelectorAll(".dsvc"),function(e){e.textContent=$("dsv").textContent});
+$("q").placeholder="Search "+DB.filter(function(d){return d.st}).length+" devices (guide, micro, balloon, etc...)";
 $("q").addEventListener("input",search);
 
 $("ph").addEventListener("input",ptUpdate);$("site").addEventListener("change",ptUpdate);$("ves").addEventListener("change",ptUpdate);
