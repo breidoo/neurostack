@@ -24,7 +24,7 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 "IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
-main{max-width:680px;margin:0 auto;padding:16px 16px 24px;display:flex;flex-direction:column;min-height:100vh;box-sizing:border-box}main>*{flex:none}.bottom{margin-top:auto;padding-top:48px}
+main{max-width:680px;margin:0 auto;padding:16px 16px 24px;display:flex;flex-direction:column;min-height:100vh;min-height:100svh;box-sizing:border-box}main>*{flex:none}.bottom{margin-top:auto;padding-top:48px}
 h1{font-size:22px;font-weight:600;margin:4px 0 0;letter-spacing:-.01em}
 .head{position:relative;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
 
@@ -248,6 +248,7 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
 /* The header's background reaches past its edges, so outlines of boxes scrolling underneath never show beside it. */
 .head:before{content:"";position:absolute;top:0;bottom:0;left:-16px;right:-16px;background:var(--bg);z-index:-1;pointer-events:none}
 .rqcnt{text-align:right;margin:4px 0 0}.rqcap{margin-top:14px;min-height:78px}.rqpriv{margin:6px 0 0}
+#convDlg{left:auto;right:12px;transform:none;top:64px;width:min(360px,calc(100vw - 24px));max-height:calc(100svh - 90px);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.35)}
 .convin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.convin .fin{width:100%;box-sizing:border-box}.convout{margin:14px 0 6px;display:grid;gap:6px}.convrow{display:flex;justify-content:space-between;align-items:baseline;padding:10px 12px;border:1px solid var(--line);border-radius:10px}.convrow b{font-size:20px;font-variant-numeric:tabular-nums}.convl{color:var(--muted)}.convsrc{opacity:.6}
 .head .hconv{margin-left:8px}.head .hconv+.hsaved{margin-left:-4px}
 @media(max-width:860px){.hconv span{display:none}.head .hconv{min-width:48px;justify-content:center;padding:0 12px;margin-left:auto;margin-right:0}.head .hconv+.hsaved{margin-left:-4px}}
@@ -426,8 +427,8 @@ main{padding-bottom:10px}.bottom{padding-top:22px}
   <p class="dnote" id="shareMsg" role="status"></p>
 </div>
 <div id="convDlg" class="dlg" role="dialog" aria-modal="true" aria-label="Unit converter" hidden>
-  <div class="dhead"><h2>Unit converter</h2><button class="x" id="convClose" type="button">Close</button></div>
-  <div class="convin"><div><label class="fl" for="convIn">Value</label><input id="convIn" class="fin" type="text" inputmode="decimal" autocomplete="off" maxlength="10"></div><div><label class="fl" for="convU">Unit</label><select id="convU" class="fin"><option value="fr">French (F)</option><option value="mm" selected>mm</option><option value="in">inches</option></select></div></div>
+  <div class="dhead"><h2>Unit converter</h2></div>
+  <div class="convin"><div><label class="fl" for="convIn">Value</label><input id="convIn" class="fin" type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="10"></div><div><label class="fl" for="convU">Unit</label><select id="convU" class="fin"><option value="fr">French (F)</option><option value="mm" selected>mm</option><option value="in">inches</option></select></div></div>
   <div id="convOut" class="convout" aria-live="polite"></div>
 </div>
 <div id="reqDlg" class="dlg" role="dialog" aria-modal="true" aria-label="Request a missing device" hidden>
@@ -4048,7 +4049,7 @@ function reportPages(){
   var line=function(t,q){q=q||{};var sz=q.sz||12.5,lh=q.lh||Math.round(sz*1.42),ind=q.ind||0;wrapTxt(t,Math.floor((W-2*P-ind)/(sz*0.53))).forEach(function(l){need(lh);rtx(cur,P+ind,y+sz,l,sz,q.col||C.ink,q.wt);y+=lh})};
   var head=function(t){need(60);y+=14;rtx(cur,P,y+15,t,15.5,C.ink,700);y+=24;cur.push('<line x1="'+P+'" y1="'+y+'" x2="'+(W-P)+'" y2="'+y+'" stroke="'+C.line+'"/>');y+=12};
   newPage();
-  y+=pdfLogo(cur,P,y)+16;rtx(cur,P,y+22,"Setup",24,C.ink,700);rtx(cur,W-P,y+22,new Date().toISOString().slice(0,10)+"  ·  dataset "+DSVER,12,C.muted,null,"end");y+=38;
+  y+=pdfLogo(cur,P,y)+16;rtx(cur,P,y+22,"Setup",24,C.ink,700);y+=38;
   // 1. the setup, device by device
   head("Your setup");
   var sumEl=document.querySelector("#summary .sum");
@@ -4083,7 +4084,7 @@ function reportPages(){
     '.ptpunc{fill:'+C.surface+';stroke:'+C.ink+';stroke-width:1.5}.ptlead{stroke:'+C.muted+';stroke-width:.5;stroke-dasharray:1.5 1.5}.ptlm{fill:'+C.ink+'}.ptlab{font-size:7.6px;fill:'+C.ink+';font-weight:600}.ptlabn{font-weight:400;fill:'+C.muted+'}.pttip{stroke:'+C.ink+';stroke-width:1}.ptnum{font-size:6.5px;font-weight:700;fill:#fff}';
   return pages.map(function(pg,i){
     return '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" font-family="system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif"><defs><style>'+css+'</style><pattern id="nsDots" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#aab6c2"/><circle cx="2.5" cy="2.5" r="1.1" fill="#55626f"/></pattern><pattern id="nsHatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="'+C.line+'"/><rect width="4" height="8" fill="'+C.muted+'"/></pattern></defs><rect width="100%" height="100%" fill="'+C.surface+'"/>'+pg.join("")+
-      '<line x1="'+P+'" y1="'+(H-46)+'" x2="'+(W-P)+'" y2="'+(H-46)+'" stroke="'+C.line+'"/><text x="'+P+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'">NeuroStack · estimate only · does not replace the manufacturer’s Instructions for Use</text><text x="'+(W-P)+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'" text-anchor="end">Page '+(i+1)+' of '+pages.length+'</text></svg>'});
+      '<line x1="'+P+'" y1="'+(H-46)+'" x2="'+(W-P)+'" y2="'+(H-46)+'" stroke="'+C.line+'"/><text x="'+P+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'">NeuroStack · estimate only · does not replace the manufacturer’s Instructions for Use</text><text x="'+(W-P)+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'" text-anchor="end">Page '+(i+1)+' of '+pages.length+'</text><text x="'+P+'" y="'+(H-12)+'" font-size="10" fill="'+C.muted+'">© 2026 NeuroStack. All rights reserved. The code, design and calculations may not be copied, modified or redistributed without permission.</text></svg>'});
 }
 // A minimal PDF: one A4 page per picture, each page a JPEG that fills it.
 function pdfFromJpegs(imgs){
@@ -4123,7 +4124,7 @@ function sizingPages(kind){
   var figure=function(side){var FW=330,FH=Math.round(330*300/320),TX=P+FW+24,ty;need(FH+16);cur.push('<rect x="'+P+'" y="'+y+'" width="'+FW+'" height="'+FH+'" rx="10" fill="#0f161d"/><svg class="fig" x="'+P+'" y="'+y+'" width="'+FW+'" height="'+FH+'" viewBox="0 0 320 300">'+$(pre+"Svg").innerHTML+'</svg>');ty=y+4;
     side.forEach(function(s){wrapTxt(s[0],Math.floor((W-P-TX-16)/(12.5*0.53))).forEach(function(l,i){if(i===0&&s[1])cur.push('<circle cx="'+(TX+5)+'" cy="'+(ty+9)+'" r="4.5" fill="'+s[1]+'"/>');rtx(cur,TX+16,ty+12.5,l,12.5,s[2]||C.ink,s[3]);ty+=18});ty+=6});y=Math.max(y+FH,ty)+12};
   newPage();
-  y+=pdfLogo(cur,P,y)+16;rtx(cur,P,y+22,web?"WEB sizing":"Coil sizing",24,C.ink,700);rtx(cur,W-P,y+22,new Date().toISOString().slice(0,10),12,C.muted,null,"end");y+=38;
+  y+=pdfLogo(cur,P,y)+16;rtx(cur,P,y+22,web?"WEB sizing":"Coil sizing",24,C.ink,700);y+=38;
   head("Measurements");
   line("Projection 1: width "+val(pre+"W1")+" mm, height "+val(pre+"H1")+" mm"+(web?", neck "+val("wbN1")+" mm":""));line("Projection 2: width "+val(pre+"W2")+" mm, height "+val(pre+"H2")+" mm"+(web?", neck "+val("wbN2")+" mm":""));
   if(!web)line("Planned packing density: "+cpTarget()+"%  ·  default coil wire diameter: "+$("cpWire").value+"″");
@@ -4156,7 +4157,7 @@ function sizingPages(kind){
   head("Important");line(document.querySelector("#"+(web?"webPage":"coilPage")+" .wbdisc p").textContent,{sz:11.5,col:C.muted});y+=6;
   [].forEach.call(document.querySelectorAll("#"+(web?"webPage":"coilPage")+" .wbsrc li"),function(li,i){line((i+1)+". "+li.textContent,{sz:10.5,col:C.muted})});
   return pages.map(function(pg,i){return '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" font-family="system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif"><rect width="100%" height="100%" fill="'+C.surface+'"/>'+pg.join("")+
-    '<line x1="'+P+'" y1="'+(H-46)+'" x2="'+(W-P)+'" y2="'+(H-46)+'" stroke="'+C.line+'"/><text x="'+P+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'">NeuroStack · estimate only · does not replace the manufacturer’s Instructions for Use</text><text x="'+(W-P)+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'" text-anchor="end">Page '+(i+1)+' of '+pages.length+'</text></svg>'})}
+    '<line x1="'+P+'" y1="'+(H-46)+'" x2="'+(W-P)+'" y2="'+(H-46)+'" stroke="'+C.line+'"/><text x="'+P+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'">NeuroStack · estimate only · does not replace the manufacturer’s Instructions for Use</text><text x="'+(W-P)+'" y="'+(H-28)+'" font-size="11" fill="'+C.muted+'" text-anchor="end">Page '+(i+1)+' of '+pages.length+'</text><text x="'+P+'" y="'+(H-12)+'" font-size="10" fill="'+C.muted+'">© 2026 NeuroStack. All rights reserved. The code, design and calculations may not be copied, modified or redistributed without permission.</text></svg>'})}
 // Saved entries and share links for the two sizing pages, as compact text.
 var ROLEC={Framing:"F",Filling:"L",Finishing:"N",Added:"A"};
 function wbEnc(o){return ["W1","W2","H1","H2","N1","N2"].map(function(k){return o[k]||""}).concat([o.pick||""]).join("~")}
@@ -4292,9 +4293,10 @@ function savedMerge(r){var a=savedGet().slice(),added=0,sel=0;r.list.forEach(fun
   savedPut(a);savedSel=sel;savedRender();return {added:added,entry:a[sel]}}
 function shadeSync(){$("shade").hidden=$("side").hidden&&$("shareDlg").hidden&&$("reqDlg").hidden&&$("convDlg").hidden}
 // The panel opens under the header, so the Saved setups button stays visible and closes it again.
-function sidePos(){if($("side").hidden)return;var top=Math.max(8,Math.round($("savedBtn").getBoundingClientRect().bottom)+8);$("side").style.top=top+"px";$("shade").style.top=top+"px"}
+function convPos(){if($("convDlg").hidden)return;var b=$("convBtn").getBoundingClientRect(),top=Math.max(8,Math.round(b.bottom)+8),w=Math.min(360,window.innerWidth-24),right=Math.min(Math.max(12,Math.round(window.innerWidth-b.right)),window.innerWidth-w-12);$("convDlg").style.top=top+"px";$("convDlg").style.right=right+"px";$("shade").style.top=top+"px"}
+function sidePos(){convPos();if($("side").hidden)return;var top=Math.max(8,Math.round($("savedBtn").getBoundingClientRect().bottom)+8);$("side").style.top=top+"px";$("shade").style.top=top+"px"}
 window.addEventListener("scroll",sidePos,{passive:true});window.addEventListener("resize",sidePos);
-function sideSet(on){srename=null;stipHide();if(on)savedRender();var b=$("savedBtn");$("side").hidden=!on;if(on)sidePos();else{$("side").style.top="";$("shade").style.top=""}b.classList.toggle("on",!!on);b.setAttribute("aria-expanded",on?"true":"false");shadeSync()}
+function sideSet(on){srename=null;if(on&&!$("convDlg").hidden){$("convDlg").hidden=true;$("convDlg").style.top="";$("convDlg").style.right="";$("convBtn").setAttribute("aria-expanded","false");$("convBtn").classList.remove("on")}stipHide();if(on)savedRender();var b=$("savedBtn");$("side").hidden=!on;if(on)sidePos();else{$("side").style.top="";$("shade").style.top=""}b.classList.toggle("on",!!on);b.setAttribute("aria-expanded",on?"true":"false");shadeSync()}
 // Share: a link that carries the setup after the # sign, and the same link as a QR code.
 function shareUrl(frag){return String(window.location.href).split("#")[0]+"#"+frag}
 function qrSvg(q){var n=q.getModuleCount(),d="",r,c;for(r=0;r<n;r++)for(c=0;c<n;c++)if(q.isDark(r,c))d+="M"+(c+4)+" "+(r+4)+"h1v1h-1z";
@@ -4617,7 +4619,7 @@ function shareOpen(frag){
   $("shareMsg").textContent=(/^file:/.test(url)?"This copy of the tool is opened from a file on this device, so the link and code only work for someone who has the file in the same place. They work for everyone once the tool is on a web address.":"");
   $("shareDlg").hidden=false;shadeSync();
 }
-function dlgClose(){$("shareDlg").hidden=true;$("reqDlg").hidden=true;$("convDlg").hidden=true;sideSet(false)}
+function dlgClose(){$("shareDlg").hidden=true;$("reqDlg").hidden=true;$("convDlg").hidden=true;$("convDlg").style.top="";$("convDlg").style.right="";$("convBtn").setAttribute("aria-expanded","false");$("convBtn").classList.remove("on");sideSet(false)}
 // Unit converter: French, mm and inches, from the header on every page.
 function convTrim(v,d){return String(+v.toFixed(d))}
 function convCalc(v,u){var mm=u==="fr"?v/3:u==="in"?v*25.4:v;return {mm:mm,inch:mm/25.4,fr:mm*3}}
@@ -4625,7 +4627,9 @@ function convUpdate(){var el=$("convIn"),raw=el.value.trim(),out=$("convOut");ou
   var r=convCalc(v,$("convU").value),u=$("convU").value;
   [["mm",convTrim(r.mm,2)+" mm"],["in",convTrim(r.inch,3)+"\u2033"],["fr",convTrim(r.fr,2)+" F"]].forEach(function(x){var row=el2("div","convrow"+(x[0]===u?" convsrc":""));row.appendChild(el2("span","convl",x[0]==="mm"?"Millimetres":x[0]==="in"?"Inches":"French"));row.appendChild(el2("b",null,x[1]));out.appendChild(row)})}
 function el2(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-function convOpen(){sideSet(false);$("convDlg").hidden=false;shadeSync();convUpdate();$("convIn").focus()}
+function convOpen(){sideSet(false);$("convDlg").hidden=false;convPos();shadeSync();convUpdate();$("convBtn").setAttribute("aria-expanded","true");$("convBtn").classList.add("on");
+  // on touch screens the keyboard would push the page up, so the field is only focused where there is a mouse
+  if(!(window.matchMedia&&window.matchMedia("(pointer:coarse)").matches))try{$("convIn").focus({preventScroll:true})}catch(e){$("convIn").focus()}}
 function sharedIn(rd,why){if(!rd){pageClose();actSay("The shared link could not be read"+(why?" ("+why+")":"")+".");return}var mg=savedMerge(rd);savedOpen(mg.entry,"Opened from a shared link."+(mg.added?" "+mg.added+" saved setup"+(mg.added>1?"s":"")+" added to Saved setups.":""))}
 function hashLoad(){var hs=window.location.hash||"",ma=/^#all=(.+)$/.exec(hs),my=/^#([yzpq])=([0-9A-Za-z]+)/.exec(hs);
   if(ma){sharedIn(savedAllRead(ma[1]),"old link format");return}
@@ -4691,7 +4695,10 @@ function reqSubmit(e){
 }
 $("vSave").onclick=function(){savePdf()};
 $("reqBtn").onclick=function(e){e.stopPropagation();reqOpen("device")};$("disBtn").onclick=function(e){e.stopPropagation();reqOpen("disagree")};$("reqForm").addEventListener("submit",reqSubmit);$("rqDev").addEventListener("input",rqCount);
-$("convBtn").onclick=function(e){e.stopPropagation();if($("convDlg").hidden)convOpen();else dlgClose()};$("convClose").onclick=dlgClose;$("convIn").addEventListener("input",function(){numClean($("convIn"));convUpdate()});$("convU").onchange=convUpdate;
+$("convBtn").onclick=function(e){e.stopPropagation();if($("convDlg").hidden)convOpen();else dlgClose()};$("convIn").addEventListener("input",function(){numClean($("convIn"));convUpdate()});
+  // only digits and one decimal point or comma can be typed, so letters never appear even briefly
+  $("convIn").addEventListener("beforeinput",function(e){if(!e.data||!/^insert/.test(e.inputType||""))return;var v=this.value,a=this.selectionStart,b=this.selectionEnd,n=(a==null?v+e.data:v.slice(0,a)+e.data+v.slice(b));if(!/^[0-9]*[.,]?[0-9]*$/.test(n))e.preventDefault()});
+  $("convIn").addEventListener("keydown",function(e){if(e.key==="Enter")this.blur()});$("convU").onchange=convUpdate;
 $("savedBtn").onclick=function(e){e.stopPropagation();sideSet($("side").hidden)};$("saveBtn").onclick=saveSetup;$("shareBtn").onclick=function(){var a=savedGet(),pk;if(!a.length)return;pk=savedPick(a);sideSet(false);shareOpen(savedAllFrag(a,pk));
   // The shorter compressed link replaces it a moment later where the browser can compress.
   if(zipOk())savedAllZip(a,pk).then(function(f){if(!$("shareDlg").hidden)shareOpen(f)},function(){})};
